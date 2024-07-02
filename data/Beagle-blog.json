@@ -1,0 +1,54 @@
+{
+    "urls": [
+        {
+            "url": "/",
+            "elements": [
+                {
+                    "element_id": "single-post-details",
+                    "expected_text": "class name home page"
+                },
+                {
+                    "element_id": "author-section",
+                    "expected_text": "author section home page"
+                },
+                {
+                    "element_id": "testanandhu",
+                    "expected_text": "author section home page"
+                },
+                {
+                    "element_id": "read-more-section",
+                    "expected_text": "Read more"
+                },
+                {
+                    "element_id": "featured-tags",
+                    "expected_text": "Read more"
+                },
+                {
+                    "element_id": "footer",
+                    "expected_text": "Read more"
+                }   
+            ]
+        },
+        {
+            "url": "/vulnerability/remote-code-execution.html",
+            "elements": [
+                {
+                    "element_id": "post-img",
+                    "expected_text": "Single blog banner image"
+                },
+                {
+                    "element_id": "toc-head",
+                    "expected_text": "Table of contents"
+                },
+                {
+                    "element_id": "toc-head",
+                    "expected_text": "Table of contents"
+                },
+                {
+                    "element_id": "footer",
+                    "expected_text": "Read more"
+                } 
+            ]
+        }
+    ]
+}

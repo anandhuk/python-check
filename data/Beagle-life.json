@@ -1,0 +1,34 @@
+{
+    "urls": [
+        {
+            "url": "/",
+            "elements": [
+                {
+                    "element_id": "element1",
+                    "expected_text": "Text1"
+                },
+                {
+                    "element_id": "element2",
+                    "expected_text": "Text2"
+                }
+            ]
+        },
+        {
+            "url": "/vulnerability/remote-code-execution.html",
+            "elements": [
+                {
+                    "element_id": "post-img",
+                    "expected_text": "Single blog banner image"
+                },
+                {
+                    "element_id": "toc-head",
+                    "expected_text": "Table of contents"
+                },
+                {
+                    "element_id": "toc-head",
+                    "expected_text": "Table of contents"
+                }
+            ]
+        }
+    ]
+}
