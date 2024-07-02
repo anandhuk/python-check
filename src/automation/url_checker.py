@@ -51,9 +51,13 @@ def check_urls(urls, elements):
     options.headless = True
     caps = DesiredCapabilities.CHROME
     caps['goog:loggingPrefs'] = {'browser': 'ALL'}
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2})
+    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
 
     service = ChromeService(executable_path='/usr/bin/chromedriver')  # Ensure correct path
-    driver = webdriver.Chrome(service=service, options=options, desired_capabilities=caps)
+    driver = webdriver.Chrome(service=service, options=options)
     try:
         driver.get(urls)
         if driver.title:  # Check if the page loads successfully
