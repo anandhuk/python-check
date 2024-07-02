@@ -35,9 +35,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4
-        wget -N https://chromedriver.storage.googleapis.com/96.0.4664.45/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip -d /usr/local/bin/
-        chmod +x /usr/local/bin/chromedriver
+        apt install chromium-chromedriver
 
     - name: Run Selenium Tests
       run: |
