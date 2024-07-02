@@ -41,4 +41,4 @@ jobs:
 
     - name: Run Selenium Tests
       run: |
-        python3 startwatchdog.py --env=prod --split=static
+        python3 start.py --env=prod --split=static
