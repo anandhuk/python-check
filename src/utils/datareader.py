@@ -8,7 +8,6 @@ def test_data_extractor(split):
     return data
 
 def test_data_reader(split):
-    print(f'test_data_reader')
     
     if split == "static":
         data_file_path = get_data_file_path('Beagle-web-static.json')

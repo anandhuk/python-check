@@ -1,4 +1,5 @@
 import json
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
@@ -6,6 +7,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from tqdm import tqdm
 import os
+
+
+DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1259835009464795146/dPQjIbehyxIBS0KNdmFZUQizqRksbEdUOdpba44_K5jG9OyRBosV8796sWrSmLkNq8Fx"
 
 
 def url_checker(env, split, test_data):
@@ -26,10 +30,8 @@ def test_data_genration(base_url, test_data):
                 elements.append(elementid.get("element_id", []))
         if check_url:
             success_list, fails_list, csp_issues_list = check_urls(check_url, elements)
-            save_results_to_json(success_list, fails_list, csp_issues_list, 'logs/results.json')
-
-            print("\nResults have been saved to 'logs/results.json'.")
-            print("\nSuccess URLs:")
+            results = save_results_to_json(success_list, fails_list, csp_issues_list, 'logs/results.json')
+            send_discord_notification(results, DISCORD_WEBHOOK_URL)
             for url in success_list:
                 print(url)
 
@@ -47,6 +49,7 @@ def check_urls(urls, elements):
     success_list = []
     fails_list = []
     csp_issues_list = []
+
     options = Options()
     options.headless = True
     caps = DesiredCapabilities.CHROME
@@ -61,8 +64,9 @@ def check_urls(urls, elements):
     try:
         driver.get(urls)
         if driver.title:  # Check if the page loads successfully
+            elements = url_info.get('elements', [])
             missing_elements = check_elements(driver, elements)
-            print(missing_elements)
+
             csp_issues = get_browser_logs(driver)
             if csp_issues:
                 csp_issues_list.append({"url": urls, "issues": csp_issues})
@@ -137,15 +141,73 @@ def check_elements(driver, elements):
     return missing_elements
 
 
-
 def save_results_to_json(success_list, fails_list, csp_issues_list, output_path):
-    results = {
-        "success": success_list,
-        "failed": fails_list,
-        "csp_issues": csp_issues_list
-    }
+    try:
+        with open(output_path, "r") as file:
+            results = json.load(file)
+    except (FileNotFoundError, json.JSONDecodeError):
+        results = {
+            "SuccessURL": {"Count": 0, "URLlist": {}},
+            "FailedURL": {"Count": 0, "URLlist": {}},
+            "CspIssuesList": {"Count": 0, "Errorlist": []}
+        }
+
+    success_count = results["SuccessURL"]["Count"]
+    for url in success_list:
+        results["SuccessURL"]["URLlist"][success_count] = url
+        success_count += 1
+    results["SuccessURL"]["Count"] = success_count
+
+    fail_count = results["FailedURL"]["Count"]
+    for fail in fails_list:
+        results["FailedURL"]["URLlist"][fail_count] = fail['url']
+        fail_count += 1
+    results["FailedURL"]["Count"] = fail_count
+
+    csp_count = results["CspIssuesList"]["Count"]
+    for issue in csp_issues_list:
+        results["CspIssuesList"]["Errorlist"].append({"Error": issue["issues"], "URL": issue["url"]})
+        csp_count += 1
+    results["CspIssuesList"]["Count"] = csp_count
+
     with open(output_path, "w") as file:
         json.dump(results, file, indent=4)
+    return results
+
+def send_discord_notification(results, webhook_url):
+    message = {
+        "content": "**URL Check Results**\n\n"
+                   f"**Success URLs ({results['SuccessURL']['Count']}):**\n" +
+                   "\n".join([f"{index}: {url}" for index, url in results["SuccessURL"]["URLlist"].items()]) + "\n\n" +
+                   f"**Failed URLs ({results['FailedURL']['Count']}):**\n" +
+                   "\n".join([f"{index}: {url}" for index, url in results["FailedURL"]["URLlist"].items()]) + "\n\n" +
+                   f"**CSP Issues ({results['CspIssuesList']['Count']}):**\n" +
+                   "\n".join([f"URL: {issue['URL']}, Issues: {issue['Error']}" for issue in results["CspIssuesList"]["Errorlist"]])
+        }
+    chunks = split_message(message["content"])
+    headers = {"Content-Type": "application/json"}
+
+    for chunk in chunks:
+        response = requests.post(webhook_url, data=json.dumps({"content": chunk}), headers=headers)
+        if response.status_code != 204:
+            print(f"Failed to send notification. Status code: {response.status_code}, Response: {response.text}")
+
+
+def split_message(content, max_length=2000):
+    lines = content.split('\n')
+    chunks = []
+    current_chunk = []
+
+    for line in lines:
+        if len('\n'.join(current_chunk + [line])) > max_length:
+            chunks.append('\n'.join(current_chunk))
+            current_chunk = [line]
+        else:
+            current_chunk.append(line)
+    chunks.append('\n'.join(current_chunk))
+
+    return chunks
+
 
 def main():
     pass

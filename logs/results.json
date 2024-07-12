@@ -1,26 +1,17 @@
 {
-    "success": [],
-    "failed": [
-        {
-            "url": "https://beaglesecurity.com/blog/vulnerability/remote-code-execution.html",
-            "missing_elements": [
-                {
-                    "element_id": "toc-head",
-                    "expected_text": "toc-head",
-                    "actual_text": null
-                },
-                {
-                    "element_id": "toc-head",
-                    "expected_text": "toc-head",
-                    "actual_text": null
-                },
-                {
-                    "element_id": "footer",
-                    "expected_text": "footer",
-                    "actual_text": null
-                }
-            ]
+    "SuccessURL": {
+        "Count": 0,
+        "URLlist": {}
+    },
+    "FailedURL": {
+        "Count": 2,
+        "URLlist": {
+            "0": "https://beaglesecurity.com/blog",
+            "1": "https://beaglesecurity.com/blog/vulnerability/remote-code-execution.html"
         }
-    ],
-    "csp_issues": []
+    },
+    "CspIssuesList": {
+        "Count": 0,
+        "Errorlist": []
+    }
 }

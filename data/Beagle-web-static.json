@@ -1,34 +1,543 @@
 {
-    "urls": [
-        {
+    "urls": [{
             "url": "/",
-            "elements": [
-                {
-                    "element_id": "element1",
-                    "expected_text": "Text1"
+            "elements": [{
+                    "element_id": "stay-secured-head",
+                    "expected_text": "home frist element Secure your heterogenous web apps & public APIs"
                 },
                 {
-                    "element_id": "element2",
-                    "expected_text": "Text2"
+                    "element_id": "cta-btn-wrap",
+                    "expected_text": "Sign up buttion"
+                },
+                {
+                    "element_id": "services-container",
+                    "expected_text": "One solution"
+                }, {
+                    "element_id": "demo-btn-wrap",
+                    "expected_text": "Demo buttion"
+                },
+                {
+                    "element_id": "feature-details-container",
+                    "expected_text": "feature details container"
+                },
+                {
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
                 }
             ]
         },
         {
-            "url": "/vulnerability/remote-code-execution.html",
-            "elements": [
-                {
-                    "element_id": "post-img",
-                    "expected_text": "Single blog banner image"
+            "url": "/features",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
                 },
                 {
-                    "element_id": "toc-head",
-                    "expected_text": "Table of contents"
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/about",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
                 },
                 {
-                    "element_id": "toc-head",
-                    "expected_text": "Table of contents"
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/whybeagle",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/pricing",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/devsecops-tools",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/free-website-security-testing",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/owasp-security-testing",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/contact",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/careers",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/press",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/terms",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/developer",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/privacy",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/howitworks",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/developer/apidoc",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/developer/integrationdoc",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/wordpress-security-testing",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/developer/devsecopsdoc",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/developer/certificatedoc",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/whitepaper",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/intruder-alternative",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/tinfoil-security-alternative",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/probely-alternative",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/crashtest-security-alternative",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/solutions/healthcare",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/solutions/saas",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/solutions/fintech",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/solutions/education",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/solutions/e-commerce",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/use-cases/developers",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/use-cases/security-engineers",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/cosmog",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/whitepapers/thank-you-securing-cloud-applications",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/resources/guides/thank-you-manual-vs-automated",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/partner-program",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/thank-you-strategic-partner-application",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/domain-expiry-checker",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/ssl-certificate-checker",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/free-test",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/campaign-lp/api-security",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/campaign-lp/thank-you",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
+                }
+            ]
+        },
+        {
+            "url": "/campaign-lp/wordpress-security",
+            "elements": [{
+                    "element_id": "footer-first-section",
+                    "expected_text": "footer container"
+                },
+                {
+                    "element_id": "collapse-icon",
+                    "expected_text": "Chek for logo present"
                 }
             ]
         }
+
     ]
 }
