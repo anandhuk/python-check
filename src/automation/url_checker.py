@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.common.exceptions import NoSuchElementException
 from tqdm import tqdm
 import os
 
@@ -29,25 +30,27 @@ def test_data_genration(base_url, test_data):
             for elementid in data.get("elements"):
                 elements.append(elementid.get("element_id", []))
         if check_url:
-            success_list, fails_list, csp_issues_list = check_urls(check_url, elements)
-            results = save_results_to_json(success_list, fails_list, csp_issues_list, 'logs/results.json')
-            send_discord_notification(results, DISCORD_WEBHOOK_URL)
-            for url in success_list:
-                print(url)
+            success_list, fails_list, csp_issues_list, missing_elements = check_urls(check_url, elements)
+            results = save_results_to_json(success_list, fails_list, csp_issues_list,missing_elements, 'logs/results.json')
+            
+            # for url in success_list:
+            #     print(url)
 
-            print("\nFailed URLs:")
-            for fail in fails_list:
-                print(f"URL: {fail['url']}, Error: {fail.get('error', 'N/A')}, Missing Elements: {fail.get('missing_elements', 'N/A')}")
+            # print("\nFailed URLs:")
+            # for fail in fails_list:
+            #     print(f"URL: {fail['url']}, Error: {fail.get('error', 'N/A')}, Missing Elements: {fail.get('missing_elements', 'N/A')}")
 
-            print("\nCSP Issues:")
-            for issue in csp_issues_list:
-                print(f"URL: {issue['url']}, Issues: {issue['issues']}")
+            # print("\nCSP Issues:")
+            # for issue in csp_issues_list:
+            #     print(f"URL: {issue['url']}, Issues: {issue['issues']}")
         else:
             print("No URLs to check.")
+    send_discord_notification(results, DISCORD_WEBHOOK_URL)
 
 def check_urls(urls, elements):
     success_list = []
     fails_list = []
+    missing_element = []
     csp_issues_list = []
 
     options = Options()
@@ -64,17 +67,14 @@ def check_urls(urls, elements):
     try:
         driver.get(urls)
         if driver.title:  # Check if the page loads successfully
-            elements = url_info.get('elements', [])
             missing_elements = check_elements(driver, elements)
-
+            success_list.append(urls)
             csp_issues = get_browser_logs(driver)
             if csp_issues:
                 csp_issues_list.append({"url": urls, "issues": csp_issues})
 
-            if not missing_elements:
-                success_list.append(urls)
-            else:
-                fails_list.append({
+            if missing_elements:
+                missing_element.append({
                     "url": urls,
                     "missing_elements": missing_elements
                 })
@@ -84,7 +84,7 @@ def check_urls(urls, elements):
         fails_list.append({"url": urls, "error": str(e)})
 
     driver.quit()
-    return success_list, fails_list, csp_issues_list
+    return success_list, fails_list, csp_issues_list, missing_element
 
 
 
@@ -108,31 +108,25 @@ def generate_base_url(env, split):
     else :
         base_url = env['app_url']
     return base_url
+
+
 def get_browser_logs(driver):
     log = driver.get_log('browser')
     csp_issues = []
     for entry in log:
-        if 'Content Security Policy' in entry['message']:
-            csp_issues.append(entry['message'])
+        csp_issues.append(entry)
     return csp_issues
+
 
 def check_elements(driver, elements):
     missing_elements = []
     for element in elements:
-        try:
-            web_by_id = driver.find_element(By.ID, element)
-            web_by_class = driver.find_element(By.CLASS_NAME, element)
-            if web_by_id.text != element:
-                actual_text = web_by_id.text
-            elif web_by_class.text != element :
-                actual_text = web_by_id.text
-                missing_elements.append({
-                    "element_id": element,
-                    "expected_text": element,
-                    "actual_text": actual_text
-                })
-                
-        except:
+        element_by_id = find_element_by_id(driver, element)
+        element_by_class_name = find_element_by_class_name(driver, element)
+        if element_by_id != None or element_by_class_name != None:
+            # element found
+            pass
+        else:
             missing_elements.append({
                 "element_id": element,
                 "expected_text": element,
@@ -140,8 +134,28 @@ def check_elements(driver, elements):
             })
     return missing_elements
 
+def find_element_by_id(driver, element_id):
+    """
+    Purpose: function to find an element by ID
+    """
+    try:
+        web_by_id = driver.find_element(By.ID, element_id)
+        return web_by_id
+    except NoSuchElementException:
+        return None
+    
+def find_element_by_class_name(driver, class_name):
+    """
+    Purpose: function to find an element by class name
+    """
+    
+    try:
+        web_by_class = driver.find_element(By.CLASS_NAME, class_name)
+        return web_by_class
+    except NoSuchElementException:
+        return None
 
-def save_results_to_json(success_list, fails_list, csp_issues_list, output_path):
+def save_results_to_json(success_list, fails_list, csp_issues_list, missing_elements, output_path):
     try:
         with open(output_path, "r") as file:
             results = json.load(file)
@@ -149,7 +163,8 @@ def save_results_to_json(success_list, fails_list, csp_issues_list, output_path)
         results = {
             "SuccessURL": {"Count": 0, "URLlist": {}},
             "FailedURL": {"Count": 0, "URLlist": {}},
-            "CspIssuesList": {"Count": 0, "Errorlist": []}
+            "CspIssuesList": {"Count": 0, "Errorlist": []},
+            "MissingElements": {"Count": 0, "URLlist": {}}
         }
 
     success_count = results["SuccessURL"]["Count"]
@@ -170,6 +185,12 @@ def save_results_to_json(success_list, fails_list, csp_issues_list, output_path)
         csp_count += 1
     results["CspIssuesList"]["Count"] = csp_count
 
+    missing_count = results["MissingElements"]["Count"]
+    for issue in missing_elements:
+        results["MissingElements"]["URLlist"][missing_count]= issue
+        missing_count += 1
+    results["MissingElements"]["Count"] = missing_count
+
     with open(output_path, "w") as file:
         json.dump(results, file, indent=4)
     return results
@@ -181,6 +202,8 @@ def send_discord_notification(results, webhook_url):
                    "\n".join([f"{index}: {url}" for index, url in results["SuccessURL"]["URLlist"].items()]) + "\n\n" +
                    f"**Failed URLs ({results['FailedURL']['Count']}):**\n" +
                    "\n".join([f"{index}: {url}" for index, url in results["FailedURL"]["URLlist"].items()]) + "\n\n" +
+                   f"**MissingElements ({results['MissingElements']['Count']}):**\n" +
+                   "\n".join([f"{index}: {url}" for index, url in results["MissingElements"]["URLlist"].items()]) + "\n\n" +
                    f"**CSP Issues ({results['CspIssuesList']['Count']}):**\n" +
                    "\n".join([f"URL: {issue['URL']}, Issues: {issue['Error']}" for issue in results["CspIssuesList"]["Errorlist"]])
         }
