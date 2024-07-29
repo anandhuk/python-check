@@ -12,11 +12,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      xvfb:
-        image: selenium/standalone-chrome
-        options: --shm-size 2g
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -31,18 +26,26 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Download ChromeDriver
+    - name: Install Chrome and ChromeDriver
       run: |
         sudo apt-get update
-        sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4
-        sudo apt install chromium-chromedriver
+        sudo apt-get install -y wget curl unzip
+        wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+        CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
+        wget -N https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv -f chromedriver /usr/local/bin/chromedriver
+        sudo chmod +x /usr/local/bin/chromedriver
+        rm chromedriver_linux64.zip
 
-    - name: Installing package list
-      run: apt list --installed    
-    - name: Removing previous chrome instances on runner 
-      run: sudo apt purge google-chrome-stable  
-    - name: Installing all necessary packages
-      run: pip install chromedriver-autoinstaller selenium pyvirtualdisplay
+    - name: Verify ChromeDriver installation
+      run: |
+        chromedriver --version
+
     - name: Run Selenium Tests
       run: |
+        pip install chromedriver-autoinstaller selenium pyvirtualdisplay
         python3 start.py --env=prod --split=static
