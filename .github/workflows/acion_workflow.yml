@@ -27,11 +27,6 @@ jobs:
           pip install -r requirements.txt
           pip install geckodriver-autoinstaller
 
-      - name: Install Firefox
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y firefox
-
       - name: Run Selenium Tests
         run: |
           python3 start.py --env=prod --split=static
