@@ -3,10 +3,10 @@ name: Run Selenium Tests
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   test:
@@ -34,4 +34,4 @@ jobs:
 
       - name: Run Selenium Tests
         run: |
-          python3 start.py --env=prod --split=blog
+          python3 start.py --env=prod --split=static
