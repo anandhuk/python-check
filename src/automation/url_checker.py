@@ -1,10 +1,17 @@
 import json
 import requests
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.chrome.service import Service as ChromeService
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+import geckodriver_autoinstaller
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+
 from selenium.common.exceptions import NoSuchElementException
 from tqdm import tqdm
 import os
@@ -53,17 +60,38 @@ def check_urls(urls, elements):
     missing_element = []
     csp_issues_list = []
 
+    # options = Options()
+    # options.headless = True
+    # caps = DesiredCapabilities.CHROME
+    # caps['goog:loggingPrefs'] = {'browser': 'ALL'}
+    # options.add_argument("--no-sandbox")
+    # options.add_argument("--disable-dev-shm-usage")
+    # options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2})
+    # options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
+
+    geckodriver_autoinstaller.install()
+
+
+    
     options = Options()
-    options.headless = True
-    caps = DesiredCapabilities.CHROME
-    caps['goog:loggingPrefs'] = {'browser': 'ALL'}
+    options.headless = True  # Run in headless mode
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_experimental_option("prefs", {"profile.default_content_setting_values.notifications": 2})
-    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
 
-    service = ChromeService(executable_path='/usr/bin/chromedriver')  # Ensure correct path
-    driver = webdriver.Chrome(service=service, options=options)
+    # Set up desired capabilities (if needed)
+    caps = DesiredCapabilities.FIREFOX.copy()
+    caps['moz:firefoxOptions'] = {
+        'args': ['--disable-notifications']
+    }
+
+    # Set capabilities through the options object
+    options.set_capability('moz:firefoxOptions', {'args': ['--disable-notifications']})
+
+    # Create a new instance of the Firefox driver
+    driver = webdriver.Firefox(options=options)
+
+    # service = ChromeService(executable_path='/usr/bin/chromedriver')  # Ensure correct path
+    # driver = webdriver.Chrome(service=service, options=options)
     try:
         driver.get(urls)
         if driver.title:  # Check if the page loads successfully
