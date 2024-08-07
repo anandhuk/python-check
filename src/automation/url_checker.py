@@ -77,6 +77,8 @@ def check_urls(urls, elements):
     options.headless = True  # Run in headless mode
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--headless")
+
 
     # Set up desired capabilities (if needed)
     caps = DesiredCapabilities.FIREFOX.copy()
